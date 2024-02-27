@@ -7,7 +7,7 @@ function Alert(props) {
 			style={{
 				width: '100%',
 				margin: '0 auto',
-				marginTop: 18
+				marginTop: 1
 			}}
 		>
 			{props.message}

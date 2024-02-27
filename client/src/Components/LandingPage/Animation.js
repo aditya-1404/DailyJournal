@@ -14,9 +14,9 @@ export default class Animation extends React.Component {
     render() {
         return (
             <StyleRoot>
-                <div className="animation-center" style={styles.lightSpeedIn}>
-
-                    <h1>Allow your words to escape you.</h1>
+                <div className="animation-center" style={{display:'inline',position:'relative',top:'200px',left:'80px',fontFamily:'"Kode Mono", monospace'}}>
+                    <h1 style={{fontSize:"70px",display:'inline'}}>DailyJournal</h1>
+                    <h3>Gain the ultimate clarity<br></br>and peace of mind YOU DESERVE.</h3>
                 </div>
             </StyleRoot>
         )

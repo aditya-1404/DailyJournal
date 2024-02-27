@@ -242,6 +242,15 @@ export default function JournalEntryForm(props) {
 		<div>
 			<br />
 			<br />
+			{error && (
+								<Alert
+									message={error}
+									type="success"
+									clearError={() =>
+										setError(undefined)
+									}
+								/>
+							)}
 			{/* text editor card */}
 			<Card className="shadow z-depth-5 card-border my-2 mx-2">
 				<Card.Body>
@@ -331,6 +340,7 @@ export default function JournalEntryForm(props) {
 										wrapperClassName="wrapper-class"
 										editorClassName="editor-class"
 										toolbarClassName="toolbar-class"
+										className="texteditorclass"
 									/>
 								</div>
 
@@ -348,7 +358,7 @@ export default function JournalEntryForm(props) {
 							<br />
 
 							{/* Success alert */}
-							{error && (
+							{/* {error && (
 								<Alert
 									message={error}
 									type="success"
@@ -356,7 +366,7 @@ export default function JournalEntryForm(props) {
 										setError(undefined)
 									}
 								/>
-							)}
+							)} */}
 						</Container>
 					</Card.Text>
 				</Card.Body>
