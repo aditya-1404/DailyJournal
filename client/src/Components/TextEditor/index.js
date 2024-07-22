@@ -68,108 +68,68 @@ export default function JournalEntryForm(props) {
 	async function todayEntryCheck() {
 
 		if (editId !== '') {
-			
-			// From search results edit ,the data which the user likes to edit will be fetched
 			const editEntryData = await API.getOneJournalEntry(
 				editId,
 				userData.user.id
 			);
 
 			today = editEntryData.data.entryDate.substring(0, 10);
-
-			// Sets the Date to the user search results edit date
 			setDate(today);
 		}
-
-		// Fetch the data if the user has an entry already after login
 		else {
-			
-			// Converting the date format to yyyy-mm-dd
 			today = moment().format('YYYY MM DD').split(' ').join('-');
-
-			// sets the Date to the current date to fetch the data if the user has an entry already
 			setDate(today);
 		}
-
-		// Retrieve a content for current date's journal entry from Database
 		const todaysEntry = await API.checkAJournalEntry(
 			today,
 			userData.user.id
 		);
-
-		// Validation to check if the user had a entry for currnt date
 		if (JSON.stringify(todaysEntry.data) !== '{}') {
-			
-			//If the user has already an entry for the current date,sets the title to the tile which the user entered
 			setTitle(todaysEntry.data.title);
-
-			//parsing the content
 			const convertedState = convertFromRaw(
 				JSON.parse(todaysEntry.data.body)
 			);
-
-			// pushing a journal entry to the editorContent
 			const editorContent = EditorState.createWithContent(
 				convertedState
 			);
-
-			// changes the state of the editorState
 			setEditorState({ editorState: editorContent });
 		}
 	}
 
 
 
-	// Render the ondateChange when the user is trying to change the date
 	const onDateChange = async (event) => {
-		
-		// On date change make title and text editor empty
 		setTitle('');
 
 		setEditorState({ editorState: EditorState.createEmpty() });
-
-		// Fecthing the date user selected and changes the format of the date
 		let dateVal = event.target.value;
 
 		dateVal = dateVal.split(' ').join('-');
-
-		//sets the date onchanging
 		setDate(dateVal);
-
-		// An API call to backend to check whether there is a journal entry for the date the user entered
 		const journalEntryCheck = await API.checkAJournalEntry(
 			dateVal,
 			userData.user.id
 		);
-
-		// If there is entry for selected date
 		if (JSON.stringify(journalEntryCheck.data) !== '{}') {
 			setTitle(journalEntryCheck.data.title);
-
-			// Applying fetched data on to editor
 			const convertedState = convertFromRaw(
 				JSON.parse(journalEntryCheck.data.body)
 			);
 
-			//pushing a journal entry to the editorContent
 			const editorContent = EditorState.createWithContent(
 				convertedState
 			);
 
-			// changes the state of the editorState
+
 			setEditorState({ editorState: editorContent });
 		}
 	};
 
 
-
-	//change local state of editor
 	const handleEditorChange = (editorState) => {
 		setEditorState({ editorState });
 	};
 
-
-	// Render this function when user clicks on submit
 	const handleFormSubmit = async (event) => {
 		
 		event.preventDefault();
